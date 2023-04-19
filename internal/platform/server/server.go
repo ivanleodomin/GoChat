@@ -1,7 +1,8 @@
 package server
 
 import (
-	"app-go/internal/platform/server/handler/health"
+	health "app-go/internal/platform/server/handler/health"
+	user "app-go/internal/platform/server/handler/user"
 	"fmt"
 	"log"
 
@@ -30,4 +31,5 @@ func (s *Server) Run() error {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.CheckHandler())
+	s.engine.POST("/users", user.Register())
 }

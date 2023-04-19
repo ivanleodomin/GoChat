@@ -1,7 +1,7 @@
 package server
 
 import (
-	"app-go/internal/platform/handler/health"
+	"app-go/internal/platform/server/handler/health"
 	"fmt"
 	"log"
 

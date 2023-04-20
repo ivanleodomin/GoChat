@@ -1,7 +1,7 @@
 package main
 
 import (
-	"app-go/cmd/api/boostrap"
+	boostrap "app-go/cmd/api/bootstrap"
 	"log"
 )
 

@@ -12,6 +12,7 @@ import (
 type Server struct {
 	httpAddr string
 	engine   *gin.Engine
+	api      *gin.RouterGroup
 }
 
 func New(host string, port uint) Server {
@@ -31,5 +32,6 @@ func (s *Server) Run() error {
 
 func (s *Server) registerRoutes() {
 	s.engine.GET("/health", health.CheckHandler())
-	s.engine.POST("/users", user.Register())
+
+	user.SetupRoutes(s.engine)
 }

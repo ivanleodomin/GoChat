@@ -3,20 +3,22 @@ package user
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"github.com/google/uuid"
 	"log"
 	"math/rand"
+
+	"github.com/google/uuid"
 )
 
 type User struct {
 	ID        string
 	Firstname string
 	Lastname  string
+	Email     string
 	Hash      string
 	Salt      string
 }
 
-func NewUser(firstname, lastname, password string) (User, error) {
+func NewUser(firstname, lastname, email, password string) (User, error) {
 
 	id := uuid.New().String()
 
@@ -32,6 +34,7 @@ func NewUser(firstname, lastname, password string) (User, error) {
 		ID:        id,
 		Firstname: firstname,
 		Lastname:  lastname,
+		Email:     email,
 		Hash:      hash,
 		Salt:      salt,
 	}, nil
@@ -60,5 +63,5 @@ func Authenticate(password, salt, hash string) bool {
 }
 
 type Repository interface {
-	Register(user User, hash, salt string) error
+	Register(user User)
 }

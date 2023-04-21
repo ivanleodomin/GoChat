@@ -64,4 +64,7 @@ func Authenticate(password, salt, hash string) bool {
 
 type Repository interface {
 	Register(user User)
+	Login(email, password string) (*User, error)
+	GetById(id string) (*User, error)
+	GetAll() []User
 }

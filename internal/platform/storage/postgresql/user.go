@@ -7,9 +7,10 @@ import (
 
 type UserModel struct {
 	gorm.Model
-	ID        int
+	ID        string
 	Firstname string
 	Lastname  string
+	Email     string
 	Hash      string
 	Salt      string
 	CreatedAt time.Time

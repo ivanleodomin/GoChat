@@ -15,10 +15,10 @@ type Server struct {
 	api      *gin.RouterGroup
 }
 
-func New(host string, port uint) Server {
+func New(host string, port string) Server {
 	srv := Server{
 		engine:   gin.New(),
-		httpAddr: fmt.Sprintf("%s:%d", host, port),
+		httpAddr: fmt.Sprintf("%s:%s", host, port),
 	}
 
 	srv.registerRoutes()

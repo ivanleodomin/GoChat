@@ -23,7 +23,7 @@ func GetDB() *gorm.DB {
 		port := os.Getenv("DB_PORT")
 
 		dsn := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable", user, pass, dbname, host, port)
-
+		fmt.Println(dsn)
 		var err error
 		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {

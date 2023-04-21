@@ -19,26 +19,27 @@ type User struct {
 func Register(userRepository user.Repository) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		var newUser User
-		if err := ctx.BindJSON(&newUser); err != nil {
+		var userJSON User
+
+		if err := ctx.BindJSON(&userJSON); err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		user, err := user.NewUser(
-			newUser.Firstname,
-			newUser.Lastname,
-			newUser.Email,
-			newUser.Password,
+		newUser, err := user.NewUser(
+			userJSON.Firstname,
+			userJSON.Lastname,
+			userJSON.Email,
+			userJSON.Password,
 		)
 
 		if err != nil {
 			ctx.String(http.StatusBadRequest, "User not created")
 		}
 
-		userRepository.Register(user)
+		userRepository.Register(newUser)
 
-		userJson, err := json.Marshal(user)
+		userJson, err := json.Marshal(newUser)
 		if err != nil {
 			ctx.String(http.StatusInternalServerError, "Error marshalling user to JSON")
 			return

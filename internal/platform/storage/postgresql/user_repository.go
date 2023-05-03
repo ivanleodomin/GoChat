@@ -3,6 +3,7 @@ package postgresql
 import (
 	user "app-go/internal"
 	"errors"
+
 	"gorm.io/gorm"
 )
 
@@ -19,12 +20,12 @@ func NewUserRepository() *UserRepository {
 
 func (r *UserRepository) Register(user user.User) {
 	register := UserModel{
-		ID:        user.ID,
 		Firstname: user.Firstname,
 		Lastname:  user.Lastname,
 		Hash:      user.Hash,
 		Salt:      user.Salt,
 	}
+
 	r.db.Create(&register)
 	return
 }
@@ -60,16 +61,20 @@ func (r *UserRepository) GetById(id string) (*user.User, error) {
 	return &res, nil
 }
 
-func (r *UserRepository) GetAll() []user.User {
-	var usersDb []UserModel
-	db.Find(&usersDb)
-
-	users := make([]user.User, len(usersDb))
-	for i, u := range usersDb {
-		users[i] = u.toUser()
+func (u *UserRepository) GetAll(page int) ([]user.User, error) {
+	var users []UserModel
+	limit := 15
+	result := db.Limit(limit).Offset((page - 1) * limit).Find(&users)
+	if result.Error != nil {
+		return nil, result.Error
 	}
 
-	return users
+	var userList []user.User
+	for _, userDb := range users {
+		userList = append(userList, userDb.toUser())
+	}
+
+	return userList, nil
 }
 
 func (u *UserModel) toUser() user.User {

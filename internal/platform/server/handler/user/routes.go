@@ -10,6 +10,9 @@ func SetupRoutes(router *gin.Engine) {
 	userRepository := postgresql.NewUserRepository()
 
 	userGroup := router.Group("/user")
-	userGroup.GET("/register", Register(userRepository))
+
+	userGroup.GET("/", GetAll(userRepository))
+	userGroup.POST("/register", Register(userRepository))
+	userGroup.POST("/login", Login(userRepository))
 
 }

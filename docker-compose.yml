@@ -13,5 +13,17 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+#  api:
+#    build: .
+#    command: ["./main"]
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#    environment:
+#      DB_HOST: db
+#    volumes:
+#      - ./cmd/api:/app/cmd/api
+
 volumes:
   postgres-data:

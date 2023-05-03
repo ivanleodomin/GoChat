@@ -5,12 +5,10 @@ import (
 	"encoding/hex"
 	"log"
 	"math/rand"
-
-	"github.com/google/uuid"
 )
 
 type User struct {
-	ID        string
+	ID        uint
 	Firstname string
 	Lastname  string
 	Email     string
@@ -19,8 +17,6 @@ type User struct {
 }
 
 func NewUser(firstname, lastname, email, password string) (User, error) {
-
-	id := uuid.New().String()
 
 	salt, err := generateSalt()
 	if err != nil {
@@ -31,7 +27,6 @@ func NewUser(firstname, lastname, email, password string) (User, error) {
 	hash := generateHash(password, salt)
 
 	return User{
-		ID:        id,
 		Firstname: firstname,
 		Lastname:  lastname,
 		Email:     email,
@@ -66,5 +61,5 @@ type Repository interface {
 	Register(user User)
 	Login(email, password string) (*User, error)
 	GetById(id string) (*User, error)
-	GetAll() []User
+	GetAll(page int) ([]User, error)
 }

@@ -1,13 +1,14 @@
 package postgresql
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type UserModel struct {
 	gorm.Model
-	ID        string
+	ID        uint
 	Firstname string
 	Lastname  string
 	Email     string
